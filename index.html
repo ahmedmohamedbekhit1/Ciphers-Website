@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciphers (En/De)Coding</title>
+    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <section class="toalbar">
+            <h1 class="title">Ciphers Encryption and Decryption Coding</h1>
+        </section>
+    </header>
+    <div class="card_back">
+        <div class="card">
+
+            <div class="radio-inputs">
+                <label class="radio">
+                    <input type="radio" name="radio" checked="">
+                    <span class="name" onclick="showSection('section1')">Caesar</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="radio">
+                    <span class="name" onclick="showSection('section2')">Railfence</span>
+                </label>
+
+                <label class="radio">
+                    <input type="radio" name="radio">
+                    <span class="name" onclick="showSection('section3')">Playfair</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="radio">
+                    <span class="name" onclick="showSection('section4')">Vigenere</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="radio">
+                    <span class="name" onclick="showSection('section5')">ADFGVX</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="radio">
+                    <span class="name" onclick="showSection('section6')">DES & 3DES</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="radio">
+                    <span class="name" onclick="">Product Cipher</span>
+                </label>
+            </div>
+            <!-- First -->
+            <section class="card-section" id="section1">
+
+                <h1 class="btn-shine">Caesar Cipher Encoder/Decoder</h1>
+
+                <select id="action">
+                    <option value="encrypt">Encrypt</option>
+                    <option value="decrypt">Decrypt</option>
+                </select>
+                <br>
+                <br>
+
+                <input type="text" id="plaintext" placeholder="Plaintext" name="plaintext">
+
+                <br>
+
+                <input type="text" id="ciphertext" placeholder="Ciphertext" name="ciphertext">
+
+                <br>
+                <div class="row-content">
+                    <input type="number" id="key" placeholder="Key Number" name="key">
+                    <button class="btn" id="process-btn"><svg height="24" width="24" fill="#FFFFFF" viewBox="0 0 24 24"
+                            data-name="Layer 1" id="Layer_1" class="sparkle">
+                            <path
+                                d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z">
+                            </path>
+                        </svg> <span class="text">Process</span></button>
+                </div>
+                <br>
+                <button class="copy" onclick="copyToClipboard('details')">
+                    <span data-text-end="Copied!" data-text-initial="Copy to clipboard" class="tooltip"></span>
+                    <span>
+                        <svg xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 6.35 6.35"
+                            y="0" x="0" height="20" width="20" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" class="clipboard">
+                            <g>
+                                <path fill="currentColor"
+                                    d="M2.43.265c-.3 0-.548.236-.573.53h-.328a.74.74 0 0 0-.735.734v3.822a.74.74 0 0 0 .735.734H4.82a.74.74 0 0 0 .735-.734V1.529a.74.74 0 0 0-.735-.735h-.328a.58.58 0 0 0-.573-.53zm0 .529h1.49c.032 0 .049.017.049.049v.431c0 .032-.017.049-.049.049H2.43c-.032 0-.05-.017-.05-.049V.843c0-.032.018-.05.05-.05zm-.901.53h.328c.026.292.274.528.573.528h1.49a.58.58 0 0 0 .573-.529h.328a.2.2 0 0 1 .206.206v3.822a.2.2 0 0 1-.206.205H1.53a.2.2 0 0 1-.206-.205V1.529a.2.2 0 0 1 .206-.206z">
+                                </path>
+                            </g>
+                        </svg>
+                        <svg xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0"
+                            x="0" height="18" width="18" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" class="checkmark">
+                            <g>
+                                <path data-original="#000000" fill="currentColor"
+                                    d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                </button>
+                <textarea id="details" rows="10" cols="50" readonly></textarea>
+
+                <script src="./Ciphers/Caesar.js"></script>
+                <script>
+                    document.getElementById("process-btn").addEventListener("click", function () {
+                        let action = document.getElementById("action").value;
+                        let plaintext = document.getElementById("plaintext");
+                        let ciphertext = document.getElementById("ciphertext");
+                        let key = parseInt(document.getElementById("key").value);
+
+                        if (action === "encrypt") {
+                            let result = CaesarEncrypt(plaintext.value, key);
+                            ciphertext.value = result.ciphertext;
+                            document.getElementById("details").value = result.details;
+                        } else if (action === "decrypt") {
+                            let result = CaesarDecrypt(ciphertext.value, key);
+                            plaintext.value = result.plaintext;
+                            document.getElementById("details").value = result.details;
+                        }
+                    });
+
+                    // Initialize input fields based on initial action selection
+                    document.addEventListener("DOMContentLoaded", function () {
+                        let action = document.getElementById("action").value;
+                        if (action === "encrypt") {
+                            document.getElementById("ciphertext").value = '';
+                            document.getElementById("ciphertext").disabled = true;
+                        } else if (action === "decrypt") {
+                            document.getElementById("plaintext").value = '';
+                            document.getElementById("plaintext").disabled = true;
+                        }
+                    });
+
+                    // Update input fields when action selection changes
+                    document.getElementById("action").addEventListener("change", function () {
+                        let action = document.getElementById("action").value;
+                        if (action === "encrypt") {
+                            document.getElementById("ciphertext").value = '';
+                            document.getElementById("ciphertext").disabled = true;
+                            document.getElementById("plaintext").disabled = false;
+                        } else if (action === "decrypt") {
+                            document.getElementById("plaintext").value = '';
+                            document.getElementById("plaintext").disabled = true;
+                            document.getElementById("ciphertext").disabled = false;
+                        }
+                    });
+                </script>
+            </section>
+            <!-- Second -->
+            <section class="card-section" id="section2">
+                <h1 class="btn-shine">Railfence Cipher Encoder/Decoder</h1>
+
+
+                <select id="action1">
+                    <option value="encrypt1">Encrypt</option>
+                    <option value="decrypt1">Decrypt</option>
+                </select>
+
+                <br>
+                <br>
+                <input type="text" id="plaintext1" placeholder="Plaintext" name="plaintext1">
+                <br>
+
+                <input type="text" id="ciphertext1" placeholder="Ciphertext" name="ciphertext1">
+                <br>
+                <div class="row-content">
+                    <input type="number" placeholder="Key Number (depth)" id="key1" name="key1">
+
+                    <button class="btn" id="process-btn1"><svg height="24" width="24" fill="#FFFFFF" viewBox="0 0 24 24"
+                            data-name="Layer 1" id="Layer_1" class="sparkle">
+                            <path
+                                d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z">
+                            </path>
+                        </svg> <span class="text">Process</span></button>
+                </div>
+                <br>
+                <button class="copy" onclick="copyToClipboard('details1')">
+                    <span data-text-end="Copied!" data-text-initial="Copy to clipboard" class="tooltip"></span>
+                    <span>
+                        <svg xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 6.35 6.35"
+                            y="0" x="0" height="20" width="20" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" class="clipboard">
+                            <g>
+                                <path fill="currentColor"
+                                    d="M2.43.265c-.3 0-.548.236-.573.53h-.328a.74.74 0 0 0-.735.734v3.822a.74.74 0 0 0 .735.734H4.82a.74.74 0 0 0 .735-.734V1.529a.74.74 0 0 0-.735-.735h-.328a.58.58 0 0 0-.573-.53zm0 .529h1.49c.032 0 .049.017.049.049v.431c0 .032-.017.049-.049.049H2.43c-.032 0-.05-.017-.05-.049V.843c0-.032.018-.05.05-.05zm-.901.53h.328c.026.292.274.528.573.528h1.49a.58.58 0 0 0 .573-.529h.328a.2.2 0 0 1 .206.206v3.822a.2.2 0 0 1-.206.205H1.53a.2.2 0 0 1-.206-.205V1.529a.2.2 0 0 1 .206-.206z">
+                                </path>
+                            </g>
+                        </svg>
+                        <svg xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0"
+                            x="0" height="18" width="18" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" class="checkmark">
+                            <g>
+                                <path data-original="#000000" fill="currentColor"
+                                    d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                </button>
+                <textarea id="details1" rows="10" cols="50" readonly></textarea>
+
+                <script src="./Ciphers/Railfence.js"></script>
+
+                <script>
+                    document.getElementById("process-btn1").addEventListener("click", function () {
+                        let action = document.getElementById("action1").value;
+                        let plaintext = document.getElementById("plaintext1").value.trim();
+                        let ciphertext = document.getElementById("ciphertext1").value.trim();
+                        let depth = parseInt(document.getElementById("key1").value);
+
+                        let result;
+                        if (action === "encrypt1") {
+                            result = RailFenceEncrypt(plaintext, depth);
+                            document.getElementById("ciphertext1").value = result.ciphertext;
+                        } else if (action === "decrypt1") {
+                            result = RailFenceDecrypt(ciphertext, depth);
+                            document.getElementById("plaintext1").value = result.plaintext;
+                        }
+
+                        document.getElementById("details1").value = result.details;
+                    });
+
+                    // Initialize input fields based on initial action selection
+                    document.addEventListener("DOMContentLoaded", function () {
+                        let action = document.getElementById("action1").value;
+                        if (action === "encrypt1") {
+                            document.getElementById("ciphertext1").value = '';
+                            document.getElementById("ciphertext1").disabled = true;
+                        } else if (action === "decrypt1") {
+                            document.getElementById("plaintext1").value = '';
+                            document.getElementById("plaintext1").disabled = true;
+                        }
+                    });
+
+                    // Update input fields when action selection changes
+                    document.getElementById("action1").addEventListener("change", function () {
+                        let action = document.getElementById("action1").value;
+                        if (action === "encrypt1") {
+                            document.getElementById("ciphertext1").value = '';
+                            document.getElementById("ciphertext1").disabled = true;
+                            document.getElementById("plaintext1").disabled = false;
+                        } else if (action === "decrypt1") {
+                            document.getElementById("plaintext1").value = '';
+                            document.getElementById("plaintext1").disabled = true;
+                            document.getElementById("ciphertext1").disabled = false;
+                        }
+                    });
+                </script>
+            </section>
+            <!-- Third -->
+            <section class="card-section" id="section3">
+                <h1 class="btn-shine">Playfair Cipher Encoder/Decoder</h1>
+
+
+                <select id="action2">
+                    <option value="encrypt2">Encrypt</option>
+                    <option value="decrypt2">Decrypt</option>
+                </select>
+                <br>
+                <br>
+
+
+                <input type="text" id="plaintext2" placeholder="Plaintext" name="plaintext2">
+                <br>
+                <input type="text" id="ciphertext2" placeholder="Ciphertext" name="ciphertext2">
+                <br>
+
+                <input type="text" id="key2" placeholder="Key text" name="key2" oninput="validateInput(this)">
+
+                <script>
+                    function validateInput(input) {
+                        // Remove any non-letter characters from the input value
+                        input.value = input.value.replace(/[^A-Za-z]/g, '');
+                    }
+                </script>
+                <br>
+
+                <!-- Shift direction controls for encryption -->
+                <div id="EncDirections">
+                    <h2>Encryption Shift Directions</h2>
+                    <div class="row-content">
+                        <section>
+                            <label for="encryptRowShift">Shift if same row:</label>
+                            <select id="encryptRowShift">
+                                <option value="right">Right</option>
+                                <option value="left">Left</option>
+                                <option value="above">Above</option>
+                                <option value="below">Below</option>
+                            </select>
+                            <br>
+                        </section>
+                        <section>
+                            <label for="encryptColumnShift">Shift if same column:</label>
+                            <select id="encryptColumnShift">
+                                <option value="below">Below</option>
+                                <option value="above">Above</option>
+                                <option value="right">Right</option>
+                                <option value="left">Left</option>
+                            </select>
+                        </section>
+                        <br>
+                        <section>
+                            <label for="encryptElsewhere">Order of letter elsewhere:</label>
+                            <select id="encryptElsewhere">
+                                <option value="row">Same row as letter 1 first</option>
+                                <option value="column">Same column as letter 1 first</option>
+                            </select>
+                        </section>
+
+                        <br>
+                    </div>
+                </div>
+
+                <!-- Shift direction controls for decryption -->
+                <div id="DecDirections">
+                    <h2>Decryption Shift Directions</h2>
+                    <div class="row-content">
+                        <section>
+                            <label for="decryptRowShift">Shift if same row:</label>
+                            <select id="decryptRowShift">
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                                <option value="above">Above</option>
+                                <option value="below">Below</option>
+                            </select>
+                        </section>
+
+                        <br>
+                        <section>
+                            <label for="decryptColumnShift">Shift if same column:</label>
+                            <select id="decryptColumnShift">
+                                <option value="above">Above</option>
+                                <option value="below">Below</option>
+                                <option value="right">Right</option>
+                                <option value="left">Left</option>
+                            </select>
+                        </section>
+
+                        <br>
+                        <section>
+                            <label for="decryptElsewhere">Order of letter elsewhere:</label>
+                            <select id="decryptElsewhere">
+                                <option value="row">Same row as letter 1 first</option>
+                                <option value="column">Same column as letter 1 first</option>
+                            </select>
+                        </section>
+
+                        <br>
+                    </div>
+                </div>
+                <br>
+                <button class="btn" id="process-btn2"><svg height="24" width="24" fill="#FFFFFF" viewBox="0 0 24 24"
+                        data-name="Layer 1" id="Layer_1" class="sparkle">
+                        <path
+                            d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z">
+                        </path>
+                    </svg> <span class="text">Process</span></button>
+                <br>
+                <button class="copy" onclick="copyToClipboard('details2')">
+                    <span data-text-end="Copied!" data-text-initial="Copy to clipboard" class="tooltip"></span>
+                    <span>
+                        <svg xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 6.35 6.35"
+                            y="0" x="0" height="20" width="20" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" class="clipboard">
+                            <g>
+                                <path fill="currentColor"
+                                    d="M2.43.265c-.3 0-.548.236-.573.53h-.328a.74.74 0 0 0-.735.734v3.822a.74.74 0 0 0 .735.734H4.82a.74.74 0 0 0 .735-.734V1.529a.74.74 0 0 0-.735-.735h-.328a.58.58 0 0 0-.573-.53zm0 .529h1.49c.032 0 .049.017.049.049v.431c0 .032-.017.049-.049.049H2.43c-.032 0-.05-.017-.05-.049V.843c0-.032.018-.05.05-.05zm-.901.53h.328c.026.292.274.528.573.528h1.49a.58.58 0 0 0 .573-.529h.328a.2.2 0 0 1 .206.206v3.822a.2.2 0 0 1-.206.205H1.53a.2.2 0 0 1-.206-.205V1.529a.2.2 0 0 1 .206-.206z">
+                                </path>
+                            </g>
+                        </svg>
+                        <svg xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0"
+                            x="0" height="18" width="18" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" class="checkmark">
+                            <g>
+                                <path data-original="#000000" fill="currentColor"
+                                    d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                </button>
+                <textarea id="details2" rows="10" cols="50" readonly></textarea>
+
+                <script src="./Ciphers/Playfair.js"></script>
+
+                <script>
+                    document.getElementById("process-btn2").addEventListener("click", function () {
+                        let action = document.getElementById("action2").value;
+                        let plaintext = document.getElementById("plaintext2").value.trim();
+                        let ciphertext = document.getElementById("ciphertext2").value.trim();
+                        let depth = parseInt(document.getElementById("key2").value);
+
+                        let result;
+                        if (action === "encrypt2") {
+                            result = RailFenceEncrypt(plaintext, depth);
+                            document.getElementById("ciphertext2").value = result.ciphertext;
+                        } else if (action === "decrypt2") {
+                            result = RailFenceDecrypt(ciphertext, depth);
+                            document.getElementById("plaintext2").value = result.plaintext;
+                        }
+
+                        document.getElementById("details2").value = result.details;
+                    });
+
+                    // Initialize input fields based on initial action selection
+                    document.addEventListener("DOMContentLoaded", function () {
+                        let action = document.getElementById("action2").value;
+                        if (action === "encrypt2") {
+                            document.getElementById("ciphertext2").value = '';
+                            document.getElementById("ciphertext2").disabled = true;
+                            document.getElementById("DecDirections").hidden = true;
+                        } else if (action === "decrypt2") {
+                            document.getElementById("plaintext2").value = '';
+                            document.getElementById("plaintext2").disabled = true;
+                            document.getElementById("EncDirections").hidden = true;
+                        }
+                    });
+
+                    // Update input fields when action selection changes
+                    document.getElementById("action2").addEventListener("change", function () {
+                        let action = document.getElementById("action2").value;
+                        if (action === "encrypt2") {
+                            document.getElementById("ciphertext2").value = '';
+                            document.getElementById("ciphertext2").disabled = true;
+                            document.getElementById("plaintext2").disabled = false;
+                            document.getElementById("DecDirections").hidden = true;
+                            document.getElementById("EncDirections").hidden = false;
+                        } else if (action === "decrypt2") {
+                            document.getElementById("plaintext2").value = '';
+                            document.getElementById("plaintext2").disabled = true;
+                            document.getElementById("ciphertext2").disabled = false;
+                            document.getElementById("EncDirections").hidden = true;
+                            document.getElementById("DecDirections").hidden = false;
+                        }
+                    });
+                </script>
+            </section>
+            <!-- Fourth -->
+            <section class="card-section" id="section4">
+                <h1 class="btn-shine">Vigenere Cipher Encoder/Decoder</h1>
+
+                <select id="action3">
+                    <option value="encrypt3">Encrypt</option>
+                    <option value="decrypt3">Decrypt</option>
+                </select>
+
+                Key Handling
+                <div class="radio-inputs">
+                    <label class="radio">
+                        <input type="radio" name="radio0" value="noRepeat" checked>
+                        <span class="name">No Repeat</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="radio0" value="repeatKey">
+                        <span class="name">Repeat Key</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="radio0" value="repeatPlaintext">
+                        <span class="name">Repeat Plaintext</span>
+                    </label>
+                </div>
+
+                <br>
+                <br>
+                <input type="text" id="plaintext3" placeholder="Plaintext" name="plaintex3">
+                <br>
+
+                <input type="text" id="ciphertext3" placeholder="Ciphertext" name="ciphertext3">
+                <br>
+                <div class="row-content">
+                    <input type="text" placeholder="Text key" id="key3" name="key3">
+
+                    <button class="btn" id="process-btn3"><svg height="24" width="24" fill="#FFFFFF" viewBox="0 0 24 24"
+                            data-name="Layer 1" id="Layer_1" class="sparkle">
+                            <path
+                                d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z">
+                            </path>
+                        </svg> <span class="text">Process</span></button>
+                </div>
+                <br>
+                <button class="copy" onclick="copyToClipboard('details3')">
+                    <span data-text-end="Copied!" data-text-initial="Copy to clipboard" class="tooltip"></span>
+                    <span>
+                        <svg xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 6.35 6.35"
+                            y="0" x="0" height="20" width="20" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" class="clipboard">
+                            <g>
+                                <path fill="currentColor"
+                                    d="M2.43.265c-.3 0-.548.236-.573.53h-.328a.74.74 0 0 0-.735.734v3.822a.74.74 0 0 0 .735.734H4.82a.74.74 0 0 0 .735-.734V1.529a.74.74 0 0 0-.735-.735h-.328a.58.58 0 0 0-.573-.53zm0 .529h1.49c.032 0 .049.017.049.049v.431c0 .032-.017.049-.049.049H2.43c-.032 0-.05-.017-.05-.049V.843c0-.032.018-.05.05-.05zm-.901.53h.328c.026.292.274.528.573.528h1.49a.58.58 0 0 0 .573-.529h.328a.2.2 0 0 1 .206.206v3.822a.2.2 0 0 1-.206.205H1.53a.2.2 0 0 1-.206-.205V1.529a.2.2 0 0 1 .206-.206z">
+                                </path>
+                            </g>
+                        </svg>
+                        <svg xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0"
+                            x="0" height="18" width="18" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" class="checkmark">
+                            <g>
+                                <path data-original="#000000" fill="currentColor"
+                                    d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                </button>
+                <textarea id="details3" rows="10" cols="50" readonly></textarea>
+
+                <script src="./Ciphers/Vigenere.js"></script>
+
+                <script>
+                    document.getElementById("process-btn3").addEventListener("click", function () {
+                        let action = document.getElementById("action3").value;
+                        let plaintext = document.getElementById("plaintext3").value.trim();
+                        let ciphertext = document.getElementById("ciphertext3").value.trim();
+                        let vigkey = document.getElementById("key3").value;
+                        let mode = document.querySelector('input[name="radio0"]:checked').value; // Get selected mode
+
+                        let result;
+                        if (action === "encrypt3") {
+                            result = vigenereEncrypt(plaintext, vigkey, mode);
+                            document.getElementById("ciphertext3").value = result.ciphertext;
+                        } else if (action === "decrypt3") {
+                            result = vigenereDecrypt(ciphertext, vigkey, mode);
+                            document.getElementById("plaintext3").value = result.plaintext;
+                        }
+
+                        document.getElementById("details3").value = result.details;
+                    });
+
+                    // Initialize input fields based on initial action selection
+                    document.addEventListener("DOMContentLoaded", function () {
+                        let action = document.getElementById("action3").value;
+                        if (action === "encrypt3") {
+                            document.getElementById("ciphertext3").value = '';
+                            document.getElementById("ciphertext3").disabled = true;
+                        } else if (action === "decrypt3") {
+                            document.getElementById("plaintext3").value = '';
+                            document.getElementById("plaintext3").disabled = true;
+                        }
+                    });
+
+                    // Update input fields when action selection changes
+                    document.getElementById("action3").addEventListener("change", function () {
+                        let action = document.getElementById("action3").value;
+                        if (action === "encrypt3") {
+                            document.getElementById("ciphertext3").value = '';
+                            document.getElementById("ciphertext3").disabled = true;
+                            document.getElementById("plaintext3").disabled = false;
+                        } else if (action === "decrypt3") {
+                            document.getElementById("plaintext3").value = '';
+                            document.getElementById("plaintext3").disabled = true;
+                            document.getElementById("ciphertext3").disabled = false;
+                        }
+                    });
+                </script>
+            </section>
+            <!-- Fifth -->
+            <section class="card-section" id="section5">
+                <h1 class="btn-shine">ADFGVX Cipher Encoder/Decoder</h1>
+
+
+                <select id="action4">
+                    <option value="encrypt4">Encrypt</option>
+                    <option value="decrypt4">Decrypt</option>
+                </select>
+
+                <br>
+                <br>
+                <input type="text" id="plaintext4" placeholder="Plaintext" name="plaintext4">
+                <br>
+
+                <input type="text" id="ciphertext4" placeholder="Ciphertext" name="ciphertext4">
+                <br>
+                <div class="row-content">
+                    <input type="text" placeholder="Polybius Square Key text" id="pkey4" name="pkey4">
+                    <input type="text" placeholder="Column Key text or number" id="ckey4" name="ckey4">
+                    <button class="btn" id="process-btn4"><svg height="24" width="24" fill="#FFFFFF" viewBox="0 0 24 24"
+                            data-name="Layer 1" id="Layer_1" class="sparkle">
+                            <path
+                                d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z">
+                            </path>
+                        </svg> <span class="text">Process</span>
+                    </button>
+                </div>
+                <br>
+                <button class="copy" onclick="copyToClipboard('details4')">
+                    <span data-text-end="Copied!" data-text-initial="Copy to clipboard" class="tooltip"></span>
+                    <span>
+                        <svg xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 6.35 6.35"
+                            y="0" x="0" height="20" width="20" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" class="clipboard">
+                            <g>
+                                <path fill="currentColor"
+                                    d="M2.43.265c-.3 0-.548.236-.573.53h-.328a.74.74 0 0 0-.735.734v3.822a.74.74 0 0 0 .735.734H4.82a.74.74 0 0 0 .735-.734V1.529a.74.74 0 0 0-.735-.735h-.328a.58.58 0 0 0-.573-.53zm0 .529h1.49c.032 0 .049.017.049.049v.431c0 .032-.017.049-.049.049H2.43c-.032 0-.05-.017-.05-.049V.843c0-.032.018-.05.05-.05zm-.901.53h.328c.026.292.274.528.573.528h1.49a.58.58 0 0 0 .573-.529h.328a.2.2 0 0 1 .206.206v3.822a.2.2 0 0 1-.206.205H1.53a.2.2 0 0 1-.206-.205V1.529a.2.2 0 0 1 .206-.206z">
+                                </path>
+                            </g>
+                        </svg>
+                        <svg xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0"
+                            x="0" height="18" width="18" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" class="checkmark">
+                            <g>
+                                <path data-original="#000000" fill="currentColor"
+                                    d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                </button>
+                <textarea id="details4" rows="10" cols="50" readonly></textarea>
+
+                <script src="./Ciphers/ADFGVX.js"></script>
+
+                <script>
+                    document.getElementById("process-btn4").addEventListener("click", function () {
+                        let action = document.getElementById("action4").value;
+                        let plaintext = document.getElementById("plaintext4").value.trim();
+                        let ciphertext = document.getElementById("ciphertext4").value.trim();
+                        let pkey4 = document.getElementById("pkey4").value.trim();
+                        let ckey4 = document.getElementById("ckey4").value.trim();
+
+                        let result;
+                        if (action === "encrypt4") {
+                            let { ciphertext, details } = adfgvxEncrypt(plaintext, pkey4, ckey4);
+                            result = columnEncrypt(ciphertext, ckey4);
+                            document.getElementById("ciphertext4").value = result.ciphertext;
+                            document.getElementById("details4").value = details + result.details;
+                        } else if (action === "decrypt4") {
+                            let { intermediate, details: colDetails } = columnDecrypt(ciphertext, ckey4);
+                            let { plaintext, details: adfgvxDetails } = adfgvxDecrypt(intermediate, pkey4);
+                            document.getElementById("plaintext4").value = plaintext;
+                            document.getElementById("details4").value = colDetails + adfgvxDetails;
+                        }
+                    });
+
+                    // Initialize input fields based on initial action selection
+                    document.addEventListener("DOMContentLoaded", function () {
+                        let action = document.getElementById("action4").value;
+                        if (action === "encrypt4") {
+                            document.getElementById("ciphertext4").value = '';
+                            document.getElementById("ciphertext4").disabled = true;
+                        } else if (action === "decrypt4") {
+                            document.getElementById("plaintext4").value = '';
+                            document.getElementById("plaintext4").disabled = true;
+                        }
+                    });
+
+                    // Update input fields when action selection changes
+                    document.getElementById("action4").addEventListener("change", function () {
+                        let action = document.getElementById("action4").value;
+                        if (action === "encrypt4") {
+                            document.getElementById("ciphertext4").value = '';
+                            document.getElementById("ciphertext4").disabled = true;
+                            document.getElementById("plaintext4").disabled = false;
+                        } else if (action === "decrypt4") {
+                            document.getElementById("plaintext4").value = '';
+                            document.getElementById("plaintext4").disabled = true;
+                            document.getElementById("ciphertext4").disabled = false;
+                        }
+                    });
+                </script>
+            </section>
+
+            <!-- Sixth -->
+            <section class="card-section" id="section6">
+                <h1 class="btn-shine">DES & 3DES Cipher Encoder/Decoder</h1>
+
+                <select id="action5">
+                    <option value="encrypt5">Encrypt</option>
+                    <option value="decrypt5">Decrypt</option>
+                </select>
+
+                Type
+                <div class="radio-inputs" id="radio1">
+                    <label class="radio">
+                        <input type="radio" name="radio1" value="1" checked>
+                        <span class="name">DES</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="radio1" value="3">
+                        <span class="name">Triple DES</span>
+                    </label>
+                </div>
+
+                Input type
+                <div class="radio-inputs" id="radio2">
+                    <label class="radio">
+                        <input type="radio" name="radio2" value="text" checked>
+                        <span class="name">Text</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="radio2" value="hexa">
+                        <span class="name">Hexa Decimal</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="radio2" value="binary">
+                        <span class="name">Binary</span>
+                    </label>
+                </div>
+
+                <br><br>
+                <!-- plaintexts -->
+                <div id="ptext">
+                    <input type="text" id="tplaintext5" placeholder="Plaintext (At least 8 characters)"
+                        name="tplaintext5">
+                </div>
+                <div id="phexa" style="display: none;">
+                    <input type="text" id="hplaintext5" placeholder="Plaintext (At least 16 Hexa characters)"
+                        name="hplaintext5">
+                </div>
+                <div id="pbinary" style="display: none;">
+                    <input type="text" id="bplaintext5" placeholder="Plaintext (At least 64-bit)" name="bplaintext5">
+                </div>
+
+                <input type="text" id="plaintext5" placeholder="Plaintext" name="plaintext5" style="display: none;">
+
+                <!-- ciphertexts -->
+                <div id="ctext" style="display: none;">
+                    <input type="text" id="tciphertext5" placeholder="Ciphertext (At least 8 characters)"
+                        name="tciphertext5">
+                </div>
+                <div id="chexa" style="display: none;">
+                    <input type="text" id="hciphertext5" placeholder="Ciphertext (At least 16 Hexa characters)"
+                        name="hciphertext5">
+                </div>
+                <div id="cbinary" style="display: none;">
+                    <input type="text" id="bciphertext5" placeholder="Ciphertext (At least 64-bit)" name="bciphertext5">
+                </div>
+
+                <div id="ncipher">
+                    <input type="text" id="ciphertext5" placeholder="Ciphertext" name="ciphertext5">
+                </div>
+                <br>
+
+                <div class="row-content">
+
+                    <div id="3keystext" style="display: none;">
+                        <input type="text" placeholder="Key 1 (At least 7 characters)" id="t1key5" name="1key5">
+                        <input type="text" placeholder="Key 2 (At least 7 characters)" id="t2key5" name="2key5">
+                        <input type="text" placeholder="Key 3 (At least7 characters)" id="t3key5" name="3key5">
+                    </div>
+                    <div id="3keyshexa" style="display: none;">
+                        <input type="text" placeholder="Key 1 (At least 14 Hexa characters)" id="h1key5" name="1key5">
+                        <input type="text" placeholder="Key 2 (At least 14 Hexa characters)" id="h2key5" name="2key5">
+                        <input type="text" placeholder="Key 3 (At least 14 Hexa characters)" id="h3key5" name="3key5">
+                    </div>
+                    <div id="3keysbinary" style="display: none;">
+                        <input type="text" placeholder="Key 1 (At least 56 bit)" id="1key5" name="b1key5">
+                        <input type="text" placeholder="Key 2 (At least 56 bit)" id="2key5" name="b2key5">
+                        <input type="text" placeholder="Key 3 (At least 56 bit)" id="3key5" name="b3key5">
+                    </div>
+                    <div id="destext">
+                        <input type="text" id="dtciphertext5" placeholder="Key (At least 7 characters)"
+                            name="dtciphertext5">
+                    </div>
+                    <div id="deshexa" style="display: none;">
+                        <input type="text" id="dhciphertext5" placeholder="key (At least 14 Hexa characters)"
+                            name="dhciphertext5">
+                    </div>
+                    <div id="desbinary" style="display: none;">
+                        <input type="text" id="dbciphertext5" placeholder="key (At least 56-bit)" name="dbciphertext5">
+                    </div>
+
+                    <button class="btn" id="process-btn5"><svg height="24" width="24" fill="#FFFFFF" viewBox="0 0 24 24"
+                            data-name="Layer 1" id="Layer_1" class="sparkle">
+                            <path
+                                d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z">
+                            </path>
+                        </svg> <span class="text">Process</span>
+                    </button>
+                </div>
+
+
+                <br><br>
+                <button class="copy" onclick="copyToClipboard('details5')">
+                    <span data-text-end="Copied!" data-text-initial="Copy to clipboard" class="tooltip"></span>
+                    <span>
+                        <svg xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 6.35 6.35"
+                            y="0" x="0" height="20" width="20" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" class="clipboard">
+                            <g>
+                                <path fill="currentColor"
+                                    d="M2.43.265c-.3 0-.548.236-.573.53h-.328a.74.74 0 0 0-.735.734v3.822a.74.74 0 0 0 .735.734H4.82a.74.74 0 0 0 .735-.734V1.529a.74.74 0 0 0-.735-.735h-.328a.58.58 0 0 0-.573-.53zm0 .529h1.49c.032 0 .049.017.049.049v.431c0 .032-.017.049-.049.049H2.43c-.032 0-.05-.017-.05-.049V.843c0-.032.018-.05.05-.05zm-.901.53h.328c.026.292.274.528.573.528h1.49a.58.58 0 0 0 .573-.529h.328a.2.2 0 0 1 .206.206v3.822a.2.2 0 0 1-.206.205H1.53a.2.2 0 0 1-.206-.205V1.529a.2.2 0 0 1 .206-.206z">
+                                </path>
+                            </g>
+                        </svg>
+                        <svg xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0"
+                            x="0" height="18" width="18" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" class="checkmark">
+                            <g>
+                                <path data-original="#000000" fill="currentColor"
+                                    d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                </button>
+
+                <textarea id="details5" rows="10" cols="50" readonly></textarea>
+
+                <script src="./Ciphers/DES.js"></script>
+
+                <script>
+                    // document.getElementById("process-btn5").addEventListener("click", function () {
+                    //     let action = document.getElementById("action5").value;
+                    //     let plaintext = document.getElementById("plaintext5").value.trim();
+                    //     let ciphertext = document.getElementById("ciphertext5").value.trim();
+                    //     let depth = document.getElementById("key5").value.trim();
+                    //     let algorithm = document.querySelector('input[name="radio1"]:checked').value; // Get algorithm type
+                    //     let inputType = document.querySelector('input[name="radio2"]:checked').value; // Get input type
+
+                    //     let result;
+                    //     if (algorithm === "1") {
+                    //         // DES selected
+                    //         if (action === "encrypt5") {
+                    //             result = desEncrypt(plaintext, depth);
+                    //             document.getElementById("ciphertext5").value = result;
+                    //         } else if (action === "decrypt5") {
+                    //             result = desDecrypt(ciphertext, depth);
+                    //             document.getElementById("plaintext5").value = result;
+                    //         }
+                    //     } else if (algorithm === "3") {
+                    //         // Triple DES selected
+                    //         let key1 = document.getElementById("1key5").value.trim();
+                    //         let key2 = document.getElementById("2key5").value.trim();
+                    //         let key3 = document.getElementById("3key5").value.trim();
+
+                    //         if (action === "encrypt5") {
+                    //             result = tripleDesEncrypt(plaintext, key1, key2, key3);
+                    //             document.getElementById("ciphertext5").value = result;
+                    //         } else if (action === "decrypt5") {
+                    //             result = tripleDesDecrypt(ciphertext, key1, key2, key3);
+                    //             document.getElementById("plaintext5").value = result;
+                    //         }
+                    //     }
+
+                    //     document.getElementById("details5").value = result.details;
+                    // });
+
+
+
+                    // Initialize input fields based on initial action selection
+                    document.addEventListener("DOMContentLoaded", function () {
+                        let action = document.getElementById("action5").value;
+                        let algorithm = document.querySelector('input[name="radio1"]:checked').value; // Get algorithm type
+                        let inputType = document.querySelector('input[name="radio2"]:checked').value; // Get algorithm type
+
+                        if (action === "encrypt5") {
+                            document.getElementById("tciphertext5").value = '';
+                            document.getElementById("hciphertext5").value = '';
+                            document.getElementById("bciphertext5").value = '';
+                            document.getElementById("ciphertext5").value = '';
+
+                            document.getElementById("tciphertext5").disabled = true;
+                            document.getElementById("hciphertext5").disabled = true;
+                            document.getElementById("bciphertext5").disabled = true;
+                            document.getElementById("ciphertext5").disabled = true;
+
+                            document.getElementById("tplaintext5").disabled = false;
+                            document.getElementById("hplaintext5").disabled = false;
+                            document.getElementById("bplaintext5").disabled = false;
+                            document.getElementById("plaintext5").disabled = false;
+
+                        } else if (action === "decrypt5") {
+                            document.getElementById("tplaintext5").value = '';
+                            document.getElementById("hplaintext5").value = '';
+                            document.getElementById("bplaintext5").value = '';
+                            document.getElementById("plaintext5").value = '';
+
+                            document.getElementById("tplaintext5").disabled = true;
+                            document.getElementById("hplaintext5").disabled = true;
+                            document.getElementById("bplaintext5").disabled = true;
+                            document.getElementById("plaintext5").disabled = true;
+
+                            document.getElementById("tciphertext5").disabled = false;
+                            document.getElementById("hciphertext5").disabled = false;
+                            document.getElementById("bciphertext5").disabled = false;
+                            document.getElementById("ciphertext5").disabled = false;
+                        }
+
+                        if (algorithm === "1") {
+                            if (inputType === "text") {
+                                document.getElementById("destext").style.display = "block";
+                                document.getElementById("deshexa").style.display = "none";
+                                document.getElementById("desbinary").style.display = "none";
+                            } else if (inputType === "hexa") {
+                                document.getElementById("destext").style.display = "none";
+                                document.getElementById("deshexa").style.display = "block";
+                                document.getElementById("desbinary").style.display = "none";
+                            } else if (inputType === "binary") {
+                                document.getElementById("destext").style.display = "none";
+                                document.getElementById("deshexa").style.display = "none";
+                                document.getElementById("desbinary").style.display = "block";
+                            }
+                            document.getElementById("3keystext").style.display = "none";
+                            document.getElementById("3keyshexa").style.display = "none";
+                            document.getElementById("3keysbinary").style.display = "none";
+                        } else if (algorithm === "3") {
+                            document.getElementById("1key3Des").style.display = "none";
+                            if (inputType === "text") {
+                                document.getElementById("3keystext").style.display = "block";
+                                document.getElementById("3keyshexa").style.display = "none";
+                                document.getElementById("3keysbinary").style.display = "none";
+                            } else if (inputType === "hexa") {
+                                document.getElementById("3keyshexa").style.display = "block";
+                                document.getElementById("3keystext").style.display = "none";
+                                document.getElementById("3keysbinary").style.display = "none";
+                            } else if (inputType === "binary") {
+                                document.getElementById("3keysbinary").style.display = "block";
+                                document.getElementById("3keystext").style.display = "none";
+                                document.getElementById("3keyshexa").style.display = "none";
+                            }
+                        }
+                    });
+
+                    // Update input fields when action selection changes
+                    document.getElementById("action5").addEventListener("change", function () {
+                        let action = document.getElementById("action5").value;
+                        let inputType = document.querySelector('input[name="radio2"]:checked').value; // Get algorithm type
+
+                        if (action === "encrypt5") {
+                            document.getElementById("tciphertext5").value = '';
+                            document.getElementById("hciphertext5").value = '';
+                            document.getElementById("bciphertext5").value = '';
+                            document.getElementById("ciphertext5").value = '';
+
+                            document.getElementById("tciphertext5").disabled = true;
+                            document.getElementById("hciphertext5").disabled = true;
+                            document.getElementById("bciphertext5").disabled = true;
+                            document.getElementById("ciphertext5").disabled = true;
+
+                            document.getElementById("tplaintext5").disabled = false;
+                            document.getElementById("hplaintext5").disabled = false;
+                            document.getElementById("bplaintext5").disabled = false;
+                            document.getElementById("plaintext5").disabled = false;
+
+                            if (inputType === "text") {
+                                document.getElementById("ptext").style.display = "block";
+                                document.getElementById("ncipher").style.display = "block";
+
+                                document.getElementById("ctext").style.display = "none";
+                                document.getElementById("chexa").style.display = "none";
+                                document.getElementById("cbinary").style.display = "none";
+                                document.getElementById("phexa").style.display = "none";
+                                document.getElementById("pbinary").style.display = "none";
+                                document.getElementById("plaintext5").style.display = "none";
+
+                            } else if (inputType === "hexa") {
+                                document.getElementById("phexa").style.display = "block";
+                                document.getElementById("ncipher").style.display = "block";
+
+                                document.getElementById("ctext").style.display = "none";
+                                document.getElementById("chexa").style.display = "none";
+                                document.getElementById("cbinary").style.display = "none";
+                                document.getElementById("ptext").style.display = "none";
+                                document.getElementById("pbinary").style.display = "none";
+                                document.getElementById("plaintext5").style.display = "none";
+                            } else if (inputType === "binary") {
+                                document.getElementById("pbinary").style.display = "block";
+                                document.getElementById("ncipher").style.display = "block";
+
+                                document.getElementById("ctext").style.display = "none";
+                                document.getElementById("chexa").style.display = "none";
+                                document.getElementById("cbinary").style.display = "none";
+                                document.getElementById("ptext").style.display = "none";
+                                document.getElementById("phexa").style.display = "none";
+                                document.getElementById("plaintext5").style.display = "none";
+                            }
+
+
+
+                        } else if (action === "decrypt5") {
+                            document.getElementById("tplaintext5").value = '';
+                            document.getElementById("hplaintext5").value = '';
+                            document.getElementById("bplaintext5").value = '';
+                            document.getElementById("plaintext5").value = '';
+
+                            document.getElementById("tplaintext5").disabled = true;
+                            document.getElementById("hplaintext5").disabled = true;
+                            document.getElementById("bplaintext5").disabled = true;
+                            document.getElementById("plaintext5").disabled = true;
+
+                            document.getElementById("tciphertext5").disabled = false;
+                            document.getElementById("hciphertext5").disabled = false;
+                            document.getElementById("bciphertext5").disabled = false;
+                            document.getElementById("ciphertext5").disabled = false;
+
+                            if (inputType === "text") {
+                                document.getElementById("ctext").style.display = "block";
+                                document.getElementById("plaintext5").style.display = "block";
+
+                                document.getElementById("chexa").style.display = "none";
+                                document.getElementById("cbinary").style.display = "none";
+                                document.getElementById("ptext").style.display = "none";
+                                document.getElementById("phexa").style.display = "none";
+                                document.getElementById("pbinary").style.display = "none";
+                                document.getElementById("ncipher").style.display = "none";
+                            } else if (inputType === "hexa") {
+                                document.getElementById("chexa").style.display = "block";
+                                document.getElementById("plaintext5").style.display = "block";
+
+                                document.getElementById("ctext").style.display = "none";
+                                document.getElementById("cbinary").style.display = "none";
+                                document.getElementById("ptext").style.display = "none";
+                                document.getElementById("phexa").style.display = "none";
+                                document.getElementById("pbinary").style.display = "none";
+                                document.getElementById("ncipher").style.display = "none";
+                            } else if (inputType === "binary") {
+                                document.getElementById("cbinary").style.display = "block";
+                                document.getElementById("plaintext5").style.display = "block";
+
+                                document.getElementById("ctext").style.display = "none";
+                                document.getElementById("chexa").style.display = "none";
+                                document.getElementById("ptext").style.display = "none";
+                                document.getElementById("phexa").style.display = "none";
+                                document.getElementById("pbinary").style.display = "none";
+                                document.getElementById("ncipher").style.display = "none";
+                            }
+
+                        }
+                    });
+
+                    // Update input fields either Des or Triple Des
+                    document.getElementById("radio1").addEventListener("change", function () {
+                        let algorithm = document.querySelector('input[name="radio1"]:checked').value; // Get algorithm type
+                        let inputType = document.querySelector('input[name="radio2"]:checked').value; // Get algorithm type
+                        if (algorithm === "1") {
+                            if (inputType === "text") {
+                                document.getElementById("destext").style.display = "block";
+                                document.getElementById("deshexa").style.display = "none";
+                                document.getElementById("desbinary").style.display = "none";
+                            } else if (inputType === "hexa") {
+                                document.getElementById("destext").style.display = "none";
+                                document.getElementById("deshexa").style.display = "block";
+                                document.getElementById("desbinary").style.display = "none";
+                            } else if (inputType === "binary") {
+                                document.getElementById("destext").style.display = "none";
+                                document.getElementById("deshexa").style.display = "none";
+                                document.getElementById("desbinary").style.display = "block";
+                            }
+                            document.getElementById("3keystext").style.display = "none";
+                            document.getElementById("3keyshexa").style.display = "none";
+                            document.getElementById("3keysbinary").style.display = "none";
+                        } else if (algorithm === "3") {
+                            document.getElementById("destext").style.display = "none";
+                                document.getElementById("deshexa").style.display = "none";
+                                document.getElementById("desbinary").style.display = "none";
+                            if (inputType === "text") {
+                                document.getElementById("3keystext").style.display = "block";
+                                document.getElementById("3keyshexa").style.display = "none";
+                                document.getElementById("3keysbinary").style.display = "none";
+                            } else if (inputType === "hexa") {
+                                document.getElementById("3keyshexa").style.display = "block";
+                                document.getElementById("3keystext").style.display = "none";
+                                document.getElementById("3keysbinary").style.display = "none";
+                            } else if (inputType === "binary") {
+                                document.getElementById("3keysbinary").style.display = "block";
+                                document.getElementById("3keystext").style.display = "none";
+                                document.getElementById("3keyshexa").style.display = "none";
+                            }
+                        }
+                    });
+
+                    // Update input fields if Text or Hexa Or binary
+                    document.getElementById("radio2").addEventListener("change", function () {
+                        let inputType = document.querySelector('input[name="radio2"]:checked').value; // Get algorithm type
+                        let algorithm = document.querySelector('input[name="radio1"]:checked').value; // Get algorithm type
+                        let action = document.getElementById("action5").value;
+
+                        if (inputType === "text") {
+                            if (action === "encrypt5") {
+                                document.getElementById("ptext").style.display = "block";
+                                document.getElementById("ncipher").style.display = "block";
+
+                                document.getElementById("ctext").style.display = "none";
+                                document.getElementById("chexa").style.display = "none";
+                                document.getElementById("cbinary").style.display = "none";
+                                document.getElementById("phexa").style.display = "none";
+                                document.getElementById("pbinary").style.display = "none";
+                                document.getElementById("plaintext5").style.display = "none";
+                            } else if (action === "decrypt5") {
+                                document.getElementById("ctext").style.display = "block";
+                                document.getElementById("plaintext5").style.display = "block";
+
+                                document.getElementById("chexa").style.display = "none";
+                                document.getElementById("cbinary").style.display = "none";
+                                document.getElementById("ptext").style.display = "none";
+                                document.getElementById("phexa").style.display = "none";
+                                document.getElementById("pbinary").style.display = "none";
+                                document.getElementById("ncipher").style.display = "none";
+                            }
+                            if (algorithm === "1") {
+                                document.getElementById("destext").style.display = "block";
+                                document.getElementById("deshexa").style.display = "none";
+                                document.getElementById("desbinary").style.display = "none";
+                            } else if (algorithm === "3") {
+                                document.getElementById("3keystext").style.display = "block";
+                                document.getElementById("3keyshexa").style.display = "none";
+                                document.getElementById("3keysbinary").style.display = "none";
+                            }
+                        } else if (inputType === "hexa") {
+                            if (action === "encrypt5") {
+                                document.getElementById("phexa").style.display = "block";
+                                document.getElementById("ncipher").style.display = "block";
+
+                                document.getElementById("ctext").style.display = "none";
+                                document.getElementById("chexa").style.display = "none";
+                                document.getElementById("cbinary").style.display = "none";
+                                document.getElementById("ptext").style.display = "none";
+                                document.getElementById("pbinary").style.display = "none";
+                                document.getElementById("plaintext5").style.display = "none";
+                            } else if (action === "decrypt5") {
+                                document.getElementById("chexa").style.display = "block";
+                                document.getElementById("plaintext5").style.display = "block";
+
+                                document.getElementById("ctext").style.display = "none";
+                                document.getElementById("cbinary").style.display = "none";
+                                document.getElementById("ptext").style.display = "none";
+                                document.getElementById("phexa").style.display = "none";
+                                document.getElementById("pbinary").style.display = "none";
+                                document.getElementById("ncipher").style.display = "none";
+                            }
+                            if (algorithm === "1") {
+                                document.getElementById("destext").style.display = "none";
+                                document.getElementById("deshexa").style.display = "block";
+                                document.getElementById("desbinary").style.display = "none";
+                            } else if (algorithm === "3") {
+                                document.getElementById("3keystext").style.display = "none";
+                                document.getElementById("3keyshexa").style.display = "block";
+                                document.getElementById("3keysbinary").style.display = "none";
+                            }
+                        }
+                        else if (inputType === "binary") {
+                            if (action === "encrypt5") {
+                                document.getElementById("pbinary").style.display = "block";
+                                document.getElementById("ncipher").style.display = "block";
+
+                                document.getElementById("ctext").style.display = "none";
+                                document.getElementById("chexa").style.display = "none";
+                                document.getElementById("cbinary").style.display = "none";
+                                document.getElementById("ptext").style.display = "none";
+                                document.getElementById("phexa").style.display = "none";
+                                document.getElementById("plaintext5").style.display = "none";
+                            } else if (action === "decrypt5") {
+                                document.getElementById("cbinary").style.display = "block";
+                                document.getElementById("plaintext5").style.display = "block";
+
+                                document.getElementById("ctext").style.display = "none";
+                                document.getElementById("chexa").style.display = "none";
+                                document.getElementById("ptext").style.display = "none";
+                                document.getElementById("phexa").style.display = "none";
+                                document.getElementById("pbinary").style.display = "none";
+                                document.getElementById("ncipher").style.display = "none";
+                            }
+                            if (algorithm === "1") {
+                                document.getElementById("destext").style.display = "none";
+                                document.getElementById("deshexa").style.display = "none";
+                                document.getElementById("desbinary").style.display = "block";
+                            } else if (algorithm === "3") {
+                                document.getElementById("3keystext").style.display = "none";
+                                document.getElementById("3keyshexa").style.display = "none";
+                                document.getElementById("3keysbinary").style.display = "block";
+                            }
+                        }
+                    });
+                </script>
+            </section>
+        </div>
+
+    </div>
+    <script>
+        // Hide all sections else the first
+        document.getElementById('section2').style.display = 'none';
+        document.getElementById('section3').style.display = 'none';
+        document.getElementById('section4').style.display = 'none';
+        document.getElementById('section5').style.display = 'none';
+        document.getElementById('section6').style.display = 'none';
+        function showSection(sectionId) {
+            // Show the selected section
+            document.getElementById('section1').style.display = 'none';
+            document.getElementById('section2').style.display = 'none';
+            document.getElementById('section3').style.display = 'none';
+            document.getElementById('section4').style.display = 'none';
+            document.getElementById('section5').style.display = 'none';
+            document.getElementById('section6').style.display = 'none';
+            document.getElementById(sectionId).style.display = 'block';
+        }
+        function copyToClipboard(textareaId) {
+            // Get the textarea element by its ID
+            var textarea = document.getElementById(textareaId);
+
+            // Temporarily remove readonly attribute if it exists
+            var isReadonly = textarea.hasAttribute('readonly');
+            if (isReadonly) {
+                textarea.removeAttribute('readonly');
+            }
+
+            // Select the text in the textarea
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the text inside the textarea to the clipboard
+            document.execCommand('copy');
+
+            // Restore readonly attribute if it was removed
+            if (isReadonly) {
+                textarea.setAttribute('readonly', true);
+            }
+
+        }
+
+
+    </script>
+    <footer>
+        <div class="footer-back">
+            <h1>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                Made By <span style="font-size: medium;">© 2024</span></h1>
+            <div class="flex-row">
+                <section>
+
+                    <div class="flex-row">
+
+                        <img class="profile" src="" alt="ahmedmohamedbekhit">
+                        <div>
+                            <h2>Ahmed Mohamed Bekhit</h2>
+                            <h3>Front-end</h3>
+                        </div>
+
+                    </div>
+
+                </section>
+                <section>
+                    <div class="flex-row">
+                        <img class="profile" src="" alt="arsany">
+                        <div>
+                            <h2>Arsany Osama</h2>
+                            <h3>Cipher Algorithms</h3>
+                        </div>
+
+                    </div>
+
+                </section>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
