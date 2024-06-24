@@ -51,7 +51,7 @@ function vigenereEncrypt(plaintext, key, mode) {
     details += `Ciphertext: ${ciphertext}\n`;
     
     return {
-        ciphertext: ciphertext,
+        ciphertext: ciphertext.trim(),
         details: details
     };
 }
@@ -102,7 +102,7 @@ function vigenereDecrypt(ciphertext, key, mode) {
     details += `Plaintext: ${plaintext}\n`;
     
     return {
-        plaintext: plaintext,
+        plaintext: plaintext.trim(),
         details: details
     };
 }

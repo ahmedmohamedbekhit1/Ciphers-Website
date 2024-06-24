@@ -1049,29 +1049,22 @@
                     <option value="decrypt6">Decrypt</option>
                 </select>
                 <br><br>
-                <div class="cipher-container">
-                    <div class="cipher-row">
-                        <select class="cipher-select" name="cipher-select">
-                            <option value="">Select Cipher</option>
-                            <option value="caesar">Caesar</option>
-                            <option value="railfence">Railfence</option>
-                            <option value="playfair">PlayFair</option>
-                            <option value="vigenere">Vigenere</option>
-                            <option value="adfgvx">ADFGVX</option>
-                            <option value="des">DES</option>
-                        </select>
-                        <div id="ciphersarrange">
+                <select id="cipher-select">
+                    <option value="">Select Cipher</option>
+                    <option value="caesar">Caesar</option>
+                    <option value="railfence">Railfence</option>
+                    <option value="playfair">Playfair</option>
+                    <option value="vigenere">Vigenere</option>
+                    <option value="adfgvx">ADFGVX</option>
+                    <option value="des">DES</option>
+                </select>
+                <button class="add-cipher">Add</button>
+                <input type="text" id="plaintext6" placeholder="Plaintext" name="plaintext6" />
+                <input type="text" id="ciphertext6" placeholder="Ciphertext" name="ciphertext6" />
+                <div class="cipher-container" id="cipher-list">
 
-                        </div>
-                        <button class="add-cipher">Add</button>
-                        <button class="remove-cipher">Remove</button>
-                        <input type="text" id="plaintext6" placeholder="Plaintext" name="plaintext6" />
-                        <input type="number" placeholder="Key Number (depth)" class="cipher-key" name="cipher-key" />
-                    </div>
                 </div>
-
                 <div class="row-content">
-                    <input type="text" id="ciphertext6" placeholder="Ciphertext" name="ciphertext6" />
 
                     <button class="btn" id="process-btn6">
                         <svg height="24" width="24" fill="#FFFFFF" viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1"
@@ -1083,7 +1076,6 @@
                         <span class="text">Process</span>
                     </button>
                 </div>
-
                 <br />
                 <button class="copy" onclick="copyToClipboard('details6')">
                     <span data-text-end="Copied!" data-text-initial="Copy to clipboard" class="tooltip"></span>
@@ -1111,9 +1103,245 @@
                 <textarea id="details6" rows="10" cols="50" readonly></textarea>
 
                 <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        let cipherContainer = document.getElementById('cipher-list');
+                        let cipherSelect = document.getElementById('cipher-select');
+                        let addButton = document.querySelector('.add-cipher');
+                        let actionSelect = document.getElementById('action6');
+                        let processButton = document.getElementById('process-btn6');
+                        document.getElementById("ciphertext6").disabled = true;
+                        let cipherCount = 0;
 
+                        addButton.addEventListener('click', function () {
+                            if (cipherSelect.value) {
+                                cipherCount++;
+                                addCipherRow(cipherSelect.value, cipherCount);
+                                cipherSelect.value = ''; // Reset the select box
+                            }
+                        });
+
+                        actionSelect.addEventListener('change', function () {
+                            let action = document.getElementById("action6").value;
+                        if (action === "encrypt6") {
+                            document.getElementById("ciphertext6").value = '';
+                            document.getElementById("ciphertext6").disabled = true;
+                            document.getElementById("plaintext6").disabled = false;
+                        } else if (action === "decrypt6") {
+                            document.getElementById("plaintext6").value = '';
+                            document.getElementById("plaintext6").disabled = true;
+                            document.getElementById("ciphertext6").disabled = false;
+                        }
+                            reverseCiphers();
+                        });
+
+                        processButton.addEventListener('click', function () {
+                            let action = actionSelect.value;
+                            if (action === 'encrypt6') {
+                                processCiphers('encrypt');
+                            } else if (action === 'decrypt6') {
+                                processCiphers('decrypt');
+                            }
+                        });
+
+                        function addCipherRow(cipher, number) {
+                            let row = document.createElement('div');
+                            row.className = 'cipher-row';
+                            let keyInput = getKeyInput(cipher);
+                            row.innerHTML = `
+                            <span>${number}) ${cipher}</span>
+                            <button class="remove-cipher">Remove</button>
+                            ${keyInput}
+                        `;
+
+                            // Add remove functionality
+                            row.querySelector('.remove-cipher').addEventListener('click', function () {
+                                cipherContainer.removeChild(row);
+                                updateCipherNumbers();
+                            });
+
+                            cipherContainer.appendChild(row);
+                        }
+
+                        function getKeyInput(cipher) {
+                            switch (cipher) {
+                                case 'caesar':
+                                    return `<input type="number" id="PCkey" placeholder="Key Number" name="PCkey">`;
+                                case 'railfence':
+                                    return `<input type="number" placeholder="Key Number (depth)" id="PCkey1" name="PCkey1">`;
+                                case 'playfair':
+                                    return `<input type="text" id="PCkey2" placeholder="Key text" name="PCkey2" oninput="validateInput(this)">`;
+                                case 'vigenere':
+                                    return `<input type="text" placeholder="Text key (mode: repeat key)" id="PCkey3" name="PCkey3">`;
+                                case 'adfgvx':
+                                    return `
+                                            <input type="text" placeholder="Polybius Square Key text" id="PCpkey4" name="PCpkey4">
+                                            <input type="text" placeholder="Column Key text or number" id="PCckey4" name="PCckey4">
+                                            `;
+                                case 'des':
+                                    return `<input type="text" id="PCdtciphertext5" placeholder="Key (7 characters)" name="PCdtciphertext5">`;
+                                default:
+                                    return '';
+                            }
+                        }
+
+                        function updateCipherNumbers() {
+                            let rows = cipherContainer.getElementsByClassName('cipher-row');
+                            for (let i = 0; i < rows.length; i++) {
+                                let span = rows[i].querySelector('span');
+                                span.innerText = `${i + 1}) ${span.innerText.split(') ')[1]}`;
+                            }
+                            cipherCount = rows.length;
+                        }
+
+                        function reverseCiphers() {
+                            let rows = Array.from(cipherContainer.getElementsByClassName('cipher-row'));
+                            rows.reverse();
+                            cipherContainer.innerHTML = '';
+                            rows.forEach(row => cipherContainer.appendChild(row));
+                            updateCipherNumbers();
+                        }
+
+                        function processCiphers(action) {
+                            let rows = Array.from(cipherContainer.getElementsByClassName('cipher-row'));
+                            let inputText = document.getElementById(action === 'encrypt' ? 'plaintext6' : 'ciphertext6').value;
+                            let resultText = inputText;
+                            document.getElementById("details6").value ='';
+                            rows.forEach(row => {
+                                let cipher = row.querySelector('span').innerText.split(') ')[1];
+                                let keyInputs = Array.from(row.querySelectorAll('input'));
+                                let keys = keyInputs.map(input => input.value);
+                                
+
+                                if (action === 'encrypt') {
+                                    resultText = encrypt1(resultText, cipher, keys);
+                                    if(cipher ==="des"){
+                                    document.getElementById('ciphertext6').value = resultText.Ciphertext;
+                                    document.getElementById("details6").value += resultText.details;
+                                    resultText=resultText.Ciphertext;
+                                    }else{
+                                    document.getElementById('ciphertext6').value = resultText.ciphertext;
+                                    document.getElementById("details6").value += resultText.details;
+                                    }
+                                    resultText=resultText.ciphertext;
+                                } else if (action === 'decrypt') {
+                                    resultText = decrypt(resultText, cipher, keys);
+                                    if(cipher ==="des"){
+                                    document.getElementById('plaintext6').value = resultText.Ciphertext;
+                                    document.getElementById("details6").value += resultText.details;
+                                    resultText=resultText.Ciphertext;
+                                    }else{
+                                    document.getElementById('plaintext6').value = resultText.plaintext;
+                                    document.getElementById("details6").value += resultText.details;
+                                    resultText=resultText.plaintext;
+                                    }
+                                }
+                            });
+                        }
+
+                        function encrypt1(text, cipher, keys) {
+                            // Placeholder function for encryption
+                            switch (cipher) {
+                                case 'caesar':
+                                    return CaesarEncrypt(text, parseInt(keys[0]));
+                                case 'railfence':
+                                    return RailFenceEncrypt(text, keys[0]);
+                                case 'playfair':
+                                    return PlayFairEncrypt(text, keys[0], 'right', 'below', 'row');
+                                case 'vigenere':
+                                    return vigenereEncrypt(text, keys[0], 'repeatKey');
+                                case 'adfgvx':
+                                    intermed = adfgvxEncrypt(text, keys[0]);
+                                    document.getElementById("details6").value += intermed.details;
+                                    return columnEncrypt(intermed.ciphertext, keys[1]);
+                                case 'des':
+                                    key = textToBinary(keys[0]);
+
+                                    // getting 56 bit key from 64 bit using the parity bits
+                                    key = permute(key, keyp, 56)
+
+                                    //splitting
+                                    let left = key.substring(0, 28);
+                                    let right = key.substring(28, 56);
+
+                                    // Arrays to store round keys
+                                    let rkb = []; // RoundKeys in binary
+                                    let rk = [];  // RoundKeys in hexadecimal
+
+                                    for (let i = 0; i < 16; i++) {
+                                        // Shifting the bits by nth shifts by checking from shift table
+                                        left = shift_left(left, shift_table[i]);
+                                        right = shift_left(right, shift_table[i]);
+
+                                        // Combination of left and right string
+                                        let combine_str = left + right;
+
+                                        // Compression of key from 56 to 48 bits
+                                        let round_key = permute(combine_str, key_comp, 48);
+
+                                        rkb.push(round_key);
+                                        rk.push(bin2hex(round_key));
+                                    }
+                                    text = textToBinary(text);
+                                    text = bin2hex(text);
+                                    return encrypt(text, rkb, rk, 'encrypt5', 'text', '1');
+                                default:
+                                    return text;
+                            }
+                        }
+
+                        function decrypt(text, cipher, keys) {
+                            // Placeholder function for decryption
+                            switch (cipher) {
+                                case 'caesar':
+                                    return CaesarDecrypt(text, parseInt(keys[0]));
+                                case 'railfence':
+                                    return RailFenceDecrypt(text, keys[0]);
+                                case 'playfair':
+                                    return PlayFairDecrypt(text, keys[0], 'left', 'above', 'row');
+                                case 'vigenere':
+                                    return vigenereDecrypt(text, keys[0], 'repeatKey');
+                                case 'adfgvx':
+                                    intermed = columnDecrypt(text, keys[1]);
+                                    document.getElementById("details6").value += intermed.details;
+                                    return adfgvxDecrypt(intermed.intermediate, keys[0]);
+                                case 'des':
+                                    ciphertext = textToBinary(text);
+                                    ciphertext = bin2hex(ciphertext);
+                                    key = textToBinary(keys[0]);
+
+                                    // Getting 56 bit key from 64 bit using the parity bits
+                                    key = permute(key, keyp, 56);
+
+                                    // Splitting
+                                    left = key.slice(0, 28);  // rkb for RoundKeys in binary
+                                    right = key.slice(28, 56);  // rk for RoundKeys in hexadecimal
+                                    rkb = [];
+                                    rk = [];
+                                    for (let i = 0; i < 16; i++) {
+                                        // Shifting the bits by nth shifts by checking from shift table
+                                        left = shift_left(left, shift_table[i]);
+                                        right = shift_left(right, shift_table[i]);
+
+                                        // Combination of left and right string
+                                        combine_str = left + right;
+
+                                        // Compression of key from 56 to 48 bits
+                                        round_key = permute(combine_str, key_comp, 48);
+
+                                        rkb.push(round_key);
+                                        rk.push(bin2hex(round_key));
+                                    }
+                                    rkb_rev = rkb.reverse();
+                                    rk_rev = rk.reverse();
+                                    return encrypt(ciphertext, rkb_rev, rk_rev, 'decrypt5', 'text', '1');
+                                default:
+                                    return text;
+                            }
+                        }
+                    });
                 </script>
             </section>
+
         </div>
 
     </div>

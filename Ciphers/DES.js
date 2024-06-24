@@ -181,10 +181,13 @@ function encrypt(plaintext, rkb, rk, action, mode, algorithm) {
         // Initial Permutation
         ptBlock = permute(ptBlock, initialPerm, 64);
         if (mode === "text") {
+            details += `Input: ${binaryToText(hex2bin(plaintext))}\n`;
             details += `After initial permutation: ${binaryToText(ptBlock)}\n`;
         } else if (mode === "hexa") {
+            details += `Input: ${plaintext}\n`;
             details += `After initial permutation: ${bin2hex(ptBlock)}\n`;
         } else if (mode === "binary") {
+            details += `Input: ${hex2bin(plaintext)}\n`;
             details += `After initial permutation: ${ptBlock}\n`;
         }
 
@@ -339,16 +342,6 @@ function validateInputs5() {
     if (action === "encrypt5") {
         if(algorithm === "1"){
             if(inputType==="text"){
-                let plaintext = document.getElementById("tplaintext5").value.trim().replace(/\s/g, "");
-                let key = document.getElementById("dtciphertext5").value.trim().replace(/\s/g, "");
-                if(validateKey(plaintext.length, 8)){
-                    alert("Enter 8 characters in plaintext you now entered "+plaintext.length+" characters");
-                    return false;
-                }
-                if(validateKey(key.length, 7)){
-                    alert("Enter 7 characters in key you now entered "+key.length+" characters");
-                    return false;
-                }
             }else if(inputType==="hexa"){
                 let plaintext = document.getElementById("hplaintext5").value.trim().replace(/\s/g, "");
                 let key = document.getElementById("dhciphertext5").value.trim().replace(/\s/g, "");
@@ -491,10 +484,6 @@ function validateInputs5() {
             if(inputType==="text"){
                 let ciphertext = document.getElementById("tciphertext5").value.trim().replace(/\s/g, "");
                 let key = document.getElementById("dtciphertext5").value.trim().replace(/\s/g, "");
-                if(validateKey(ciphertext.length, 8)){
-                    alert("Enter 8 characters in ciphertext you now entered "+ciphertext.length+" characters");
-                    return false;
-                }
                 if(validateKey(key.length, 7)){
                     alert("Enter 7 characters in key you now entered "+key.length+" characters");
                     return false;
@@ -502,10 +491,6 @@ function validateInputs5() {
             }else if(inputType==="hexa"){
                 let ciphertext = document.getElementById("hciphertext5").value.trim().replace(/\s/g, "");
                 let key = document.getElementById("dhciphertext5").value.trim().replace(/\s/g, "");
-                if(validateKey(ciphertext.length, 16)){
-                    alert("Enter 16 hexa characters in plaintext you now entered "+ciphertext.length+" hexa characters");
-                    return false;
-                }
                 if(validateKey(key.length, 14)){
                     alert("Enter 14 hexa characters in key you now entered "+key.length+" hexa characters");
                     return false;
@@ -521,10 +506,6 @@ function validateInputs5() {
             }else if(inputType==="binary"){
                 let ciphertext = document.getElementById("bciphertext5").value.trim().replace(/\s/g, "");
                 let key = document.getElementById("dbciphertext5").value.trim().replace(/\s/g, "");
-                if(validateKey(ciphertext.length, 64)){
-                    alert("Enter 64-bit in plaintext you now entered "+ciphertext.length+"-bit");
-                    return false;
-                }
                 if(validateKey(key.length, 14)){
                     alert("Enter 56-bit  you now entered "+key.length+"-bit");
                     return false;
@@ -544,10 +525,6 @@ function validateInputs5() {
                 let key1 = document.getElementById("t1key5").value.trim().replace(/\s/g, "");
                 let key2 = document.getElementById("t2key5").value.trim().replace(/\s/g, "");
                 let key3 = document.getElementById("t3key5").value.trim().replace(/\s/g, "");
-                 if(validateKey(ciphertext.length, 8)){
-                    alert("Enter 8 characters in plaintext you now entered "+ciphertext.length+" characters");
-                    return false;
-                }
                 if(validateKey(key1.length, 7)){
                     alert("Enter 7 characters in key1 you now entered "+key1.length+" characters");
                     return false;
@@ -565,10 +542,6 @@ function validateInputs5() {
                 let key1 = document.getElementById("h1key5").value.trim().replace(/\s/g, "");
                 let key2 = document.getElementById("h2key5").value.trim().replace(/\s/g, "");
                 let key3 = document.getElementById("h3key5").value.trim().replace(/\s/g, "");
-                 if(validateKey(ciphertext.length, 16)){
-                    alert("Enter 16 hexa characters in plaintext you now entered "+ciphertext.length+" hexa characters");
-                    return false;
-                }
                 if(validateKey(key1.length, 14)){
                     alert("Enter 14 characters in key1 you now entered "+key1.length+" hexa characters");
                     return false;
@@ -602,10 +575,6 @@ function validateInputs5() {
                 let key1 = document.getElementById("b1key5").value.trim().replace(/\s/g, "");
                 let key2 = document.getElementById("b2key5").value.trim().replace(/\s/g, "");
                 let key3 = document.getElementById("b3key5").value.trim().replace(/\s/g, "");
-                 if(validateKey(ciphertext.length, 64)){
-                    alert("Enter 64-bit in plaintext you now entered "+ciphertext.length+"-bit");
-                    return false;
-                }
                 if(validateKey(key1.length, 56)){
                     alert("Enter 56-bit in key1 you now entered "+key1.length+"-bit");
                     return false;

@@ -105,21 +105,20 @@ function processAction() {
         return;
     }
 
-    let plaintext = document.getElementById("plaintext").value.trim();
-    let ciphertext = document.getElementById("ciphertext").value.trim();
-    let key = parseInt(document.getElementById("key").value.trim());
     let action = document.getElementById("action").value;
+    let plaintext = document.getElementById("plaintext");
+    let ciphertext = document.getElementById("ciphertext");
+    let key = parseInt(document.getElementById("key").value);
 
-    let result = {};
     if (action === "encrypt") {
-        result = CaesarEncrypt(plaintext, key);
-        document.getElementById("ciphertext").value = result.ciphertext;
+        let result = CaesarEncrypt(plaintext.value, key);
+        ciphertext.value = result.ciphertext;
+        document.getElementById("details").value = result.details;
     } else if (action === "decrypt") {
-        result = CaesarDecrypt(ciphertext, key);
-        document.getElementById("plaintext").value = result.plaintext;
+        let result = CaesarDecrypt(ciphertext.value, key);
+        plaintext.value = result.plaintext;
+        document.getElementById("details").value = result.details;
     }
-
-    document.getElementById("details").innerText = result.details;
 }
 
 // Attach event listener to process button

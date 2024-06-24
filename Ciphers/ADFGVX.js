@@ -1,8 +1,7 @@
 // Function to perform ADFGVX encryption
-function adfgvxEncrypt(plaintext, pkey4 = '', ckey4 = '') {
+function adfgvxEncrypt(plaintext, pkey4 = '') {
     try {
         pkey4 = pkey4.toUpperCase().replace(/\s/g, '');
-        ckey4 = ckey4.toUpperCase().replace(/\s/g, '');
         let matrix = [];
 
         // Use default Polybius square if pkey4 is empty
@@ -156,7 +155,7 @@ function columnDecrypt(ciphertext, key) {
             }
         }
     }
-    return { intermediate, details };
+    return { intermediate: intermediate.trim(), details };
 }
 
 
@@ -190,7 +189,6 @@ function adfgvxDecrypt(intermediate, key) {
     intermediate = intermediate.toUpperCase().replace(/\s/g, '');
     let details = `Intermediate Cipher: ${intermediate}\n`;
     details += `*** Decrypting by ADFGVX ***\n`;
-    details += `Polybius Square Matrix:\n${matrix.map(row => row.join(' ')).join('\n')}\n`;
 
     details+=`Polybius Square :\n`;
     details+= `A, D, F, G, V, X\n\n`;
@@ -250,7 +248,7 @@ function adfgvxDecrypt(intermediate, key) {
     }
     details += `Plaintext: ${[plaintext]}\n`;
 
-    return { plaintext, details};
+    return { plaintext: plaintext.trim(), details};
 }
 
 // Helper function to find indices in matrix
@@ -306,7 +304,7 @@ function processAction4() {
 
     let result;
     if (action === "encrypt4") {
-        let { ciphertext, details } = adfgvxEncrypt(plaintext, pkey4, ckey4);
+        let { ciphertext, details } = adfgvxEncrypt(plaintext, pkey4);
         result = columnEncrypt(ciphertext, ckey4);
         document.getElementById("ciphertext4").value = result.ciphertext;
         document.getElementById("details4").value = details + result.details;
