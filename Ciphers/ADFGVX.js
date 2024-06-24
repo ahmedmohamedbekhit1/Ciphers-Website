@@ -1,15 +1,14 @@
 // Function to perform ADFGVX encryption
-function adfgvxEncrypt(plaintext, pkey4, ckey4) {
+function adfgvxEncrypt(plaintext, pkey4 = '', ckey4 = '') {
     try {
-        pkey4 = (pkey4 || '').toUpperCase().replace(/\s/g, '');
-        ckey4 = (ckey4 || '').toUpperCase().replace(/\s/g, '');
+        pkey4 = pkey4.toUpperCase().replace(/\s/g, '');
+        ckey4 = ckey4.toUpperCase().replace(/\s/g, '');
         let matrix = [];
 
         // Use default Polybius square if pkey4 is empty
+        const defaultPolybiusChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         if (pkey4 === '') {
-            for (let char of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') {
-                matrix.push(char);
-            }
+            matrix = [...defaultPolybiusChars];
         } else {
             // Add pkey4 characters to the matrix
             for (let char of pkey4) {
@@ -19,7 +18,7 @@ function adfgvxEncrypt(plaintext, pkey4, ckey4) {
             }
 
             // Add remaining alphabetic characters and numbers to the matrix
-            for (let char of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') {
+            for (let char of defaultPolybiusChars) {
                 if (!matrix.includes(char)) {
                     matrix.push(char);
                 }
@@ -106,109 +105,152 @@ function columnEncrypt(intermediate, ckey4) {
         return { ciphertext: '', details: '' };
     }
 }
+function columnDecrypt(ciphertext, key) {
+    key = key.toUpperCase().replace(/\s/g, '');
+    let keyNumbers = [];
+    for (let char of key) {
+        keyNumbers.push(char.charCodeAt(0) - 'A'.charCodeAt(0) + 1);
+    }
 
-// Function to perform column transposition decryption
-function columnDecrypt(ciphertext, ckey4) {
-    try {
-        ckey4 = ckey4.toUpperCase().replace(/\s/g, '');
-        let keyNumbers = [];
-        for (let char of ckey4) {
-            keyNumbers.push(char.charCodeAt(0) - 'A'.charCodeAt(0) + 1);
-        }
+    let details = "*** Column Transposition Technique ***\n";
+    details += `Ciphertext: ${ciphertext}\n`;
+    details += `Column key: ${key}\n`;
 
-        let details = `*** Column Transposition Technique ***\n`;
-        details += `Ciphertext: ${ciphertext}\n`;
-        details += `Column key: ${ckey4}\n`;
-        details += `Column key indices: ${keyNumbers.join(', ')}\n`;
+    // Determine the number of rows in the matrix
+    let rows = Math.ceil(ciphertext.length / keyNumbers.length);
+    let remainder = ciphertext.length % keyNumbers.length;
+    let deletedCells = 0;
+    if (remainder !== 0) {
+        deletedCells = keyNumbers.length - remainder;
+    }
 
-        let columns = keyNumbers.length;
-        let rows = Math.ceil(ciphertext.length / columns);
-        let remainder = ciphertext.length % columns;
-        let matrix = Array.from({ length: rows }, () => Array(columns).fill(' '));
+    // Create an empty matrix to store the ciphertext characters
+    let matrix = Array.from({ length: rows }, () => Array(keyNumbers.length).fill(''));
 
-        let sortedKeyIndices = keyNumbers
-            .map((num, idx) => [num, idx])
-            .sort((a, b) => a[0] - b[0])
-            .map(([, idx]) => idx);
-
-        let ciphertextIndex = 0;
-        for (let i = 0; i < sortedKeyIndices.length; i++) {
-            const columnIndex = sortedKeyIndices[i];
-            for (let j = 0; j < rows; j++) {
-                if (j === rows - 1 && columnIndex >= remainder) {
-                    continue;
-                }
-                if (ciphertextIndex < ciphertext.length) {
+    // Fill the matrix with the ciphertext characters
+    let ciphertextIndex = 0;
+    let sortedKeyNumbers = [...keyNumbers].sort((a, b) => a - b);
+    for (let keyIndex of sortedKeyNumbers) {
+        let columnIndex = keyNumbers.indexOf(keyIndex);
+        for (let j = 0; j < rows; j++) {
+            if (ciphertextIndex < ciphertext.length) {
+                if (j === rows - 1 && columnIndex >= keyNumbers.length - deletedCells) {
+                    matrix[j][columnIndex] = '0';
+                } else {
                     matrix[j][columnIndex] = ciphertext[ciphertextIndex++];
                 }
+            } else {
+                matrix[j][columnIndex] = ' ';
             }
         }
-
-        details += `Column Transposition Matrix:\n${matrix.map(row => row.join(' ')).join('\n')}\n`;
-
-        let intermediate = '';
-        for (let row of matrix) {
-            intermediate += row.join('');
-        }
-
-        return { intermediate, details };
-    } catch (error) {
-        console.error('Error during column transposition decryption:', error);
-        return { intermediate: '', details: '' };
     }
+
+    details += `${keyNumbers.join(', ')}, (Deleted Cells: ${deletedCells})\n\n`;
+    details += matrix.map(row => row.join(', ')).join('\n') + '\n';
+
+    let intermediate = '';
+    for (let j = 0; j < rows; j++) {
+        for (let i = 0; i < keyNumbers.length; i++) {
+            if (matrix[j][i] !== '0') {
+                intermediate += matrix[j][i];
+            }
+        }
+    }
+    return { intermediate, details };
 }
 
-// Function to perform ADFGVX decryption
-function adfgvxDecrypt(intermediate, pkey4) {
-    try {
-        pkey4 = (pkey4 || '').toUpperCase().replace(/\s/g, '');
-        let matrix = [];
 
-        // Use default Polybius square if pkey4 is empty
-        if (pkey4 === '') {
-            for (let char of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') {
-                matrix.push(char);
-            }
-        } else {
-            for (let char of pkey4) {
-                if (!matrix.includes(char)) {
-                    matrix.push(char);
-                }
-            }
+function adfgvxDecrypt(intermediate, key) {
+    key = key.toUpperCase().replace(/\s/g, '');
+    let matrix = [];
 
-            for (let char of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') {
-                if (!matrix.includes(char)) {
-                    matrix.push(char);
-                }
-            }
+    // Add key characters to the matrix
+    for (let char of key) {
+        if (!matrix.includes(char)) {
+            matrix.push(char);
         }
-
-        matrix = chunkArray(matrix, 6);
-
-        let details = `Intermediate Cipher: ${intermediate}\n`;
-        details += `*** Decrypting by ADFGVX ***\n`;
-        
-        details += `Polybius Square Matrix:\n${matrix.map(row => row.join(' ')).join('\n')}\n`;
-
-        intermediate = intermediate.toUpperCase().replace(/\s/g, '');
-
-        let plaintext = '';
-        for (let i = 0; i < intermediate.length; i += 2) {
-            let pair = intermediate[i] + intermediate[i + 1];
-            let [rowChar, colChar] = pair.split('');
-            let row = 'ADFGVX'.indexOf(rowChar);
-            let col = 'ADFGVX'.indexOf(colChar);
-
-            plaintext += matrix[row][col];
-        }
-
-        details += `Plaintext: ${plaintext}\n`;
-
-        return { plaintext, details };
-    } catch (error) {
-        console.error('Error during ADFGVX decryption:', error);
-        return { plaintext: '', details: '' };
     }
+
+    // Add remaining alphabetic characters and numbers to the matrix
+    for (let char of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') {
+        if (!matrix.includes(char)) {
+            matrix.push(char);
+        }
+    }
+
+    matrix = Array.from(matrix.join('')).reduce((acc, curr, i) => {
+        const rowIndex = Math.floor(i / 6);
+        if (!acc[rowIndex]) {
+            acc.push([]);
+        }
+        acc[rowIndex].push(curr);
+        return acc;
+    }, []);
+
+    intermediate = intermediate.toUpperCase().replace(/\s/g, '');
+    let details = `Intermediate Cipher: ${intermediate}\n`;
+    details += `*** Decrypting by ADFGVX ***\n`;
+    details += `Polybius Square Matrix:\n${matrix.map(row => row.join(' ')).join('\n')}\n`;
+
+    details+=`Polybius Square :\n`;
+    details+= `A, D, F, G, V, X\n\n`;
+    details += matrix.map(row => row.join(', ')).join('\n') + '\n';
+    
+
+    let plaintext = "";
+    let i = 0;
+    while (i < intermediate.length) {
+        const pair = intermediate[i] + intermediate[i + 1];
+        i += 2;
+
+        let indexRow, indexCol;
+        switch (pair[0]) {
+            case 'A':
+                indexRow = 0;
+                break;
+            case 'D':
+                indexRow = 1;
+                break;
+            case 'F':
+                indexRow = 2;
+                break;
+            case 'G':
+                indexRow = 3;
+                break;
+            case 'V':
+                indexRow = 4;
+                break;
+            case 'X':
+                indexRow = 5;
+                break;
+        }
+
+        switch (pair[1]) {
+            case 'A':
+                indexCol = 0;
+                break;
+            case 'D':
+                indexCol = 1;
+                break;
+            case 'F':
+                indexCol = 2;
+                break;
+            case 'G':
+                indexCol = 3;
+                break;
+            case 'V':
+                indexCol = 4;
+                break;
+            case 'X':
+                indexCol = 5;
+                break;
+        }
+
+        plaintext += matrix[indexRow][indexCol];
+    }
+    details += `Plaintext: ${[plaintext]}\n`;
+
+    return { plaintext, details};
 }
 
 // Helper function to find indices in matrix
@@ -231,6 +273,9 @@ function chunkArray(arr, size) {
     }
     return result;
 }
+
+
+
 
 // Function to validate inputs before processing
 function validateInputs4() {

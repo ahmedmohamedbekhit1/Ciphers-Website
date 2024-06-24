@@ -1,4 +1,3 @@
-// Function to perform Vigenere cipher encryption with key handling modes
 function vigenereEncrypt(plaintext, key, mode) {
     plaintext = plaintext.toUpperCase().replace(/ /g, "");
     key = key.toUpperCase();
@@ -11,15 +10,23 @@ function vigenereEncrypt(plaintext, key, mode) {
     details += `Key: ${key}\n`;
     details += `Mode: ${mode}\n`;
 
+    let keyIndex = 0;
+    let repp=0;
     for (let i = 0; i < plaintext.length; i++) {
         let plainchar = plaintext[i];
         let plainIndex = plainchar.charCodeAt(0) - 65;
-        let keyIndex;
 
         if (mode === "repeatKey") {
             keyIndex = key[i % key.length].charCodeAt(0) - 65;
         } else if (mode === "repeatPlaintext") {
-            keyIndex = plaintext[i % key.length].charCodeAt(0) - 65;
+            let keyChar = key[i % key.length].charCodeAt(0) - 65;
+            if (i < key.length) {
+                keyIndex = keyChar;
+            } else {
+                
+                keyIndex = plaintext[repp].charCodeAt(0) - 65;
+                repp=repp+1;
+            }
         } else { // no repeat (default)
             if (i < key.length) {
                 keyIndex = key[i].charCodeAt(0) - 65;
@@ -48,7 +55,6 @@ function vigenereEncrypt(plaintext, key, mode) {
         details: details
     };
 }
-
 
 // Function to perform Vigenere cipher decryption with key handling modes
 function vigenereDecrypt(ciphertext, key, mode) {

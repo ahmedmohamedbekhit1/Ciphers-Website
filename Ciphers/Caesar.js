@@ -113,17 +113,13 @@ function processAction() {
     let result = {};
     if (action === "encrypt") {
         result = CaesarEncrypt(plaintext, key);
+        document.getElementById("ciphertext").value = result.ciphertext;
     } else if (action === "decrypt") {
         result = CaesarDecrypt(ciphertext, key);
+        document.getElementById("plaintext").value = result.plaintext;
     }
 
     document.getElementById("details").innerText = result.details;
-
-    if (action === "encrypt") {
-        document.getElementById("ciphertext").value = result.ciphertext;
-    } else if (action === "decrypt") {
-        document.getElementById("plaintext").value = result.plaintext;
-    }
 }
 
 // Attach event listener to process button
