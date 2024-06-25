@@ -11,20 +11,86 @@
     /* font-size: 14px; */
 }
 
+.cssbuttons-io-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .2em;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 16px;
+    padding: .5em 1.5em;
+    color: white;
+    background: linear-gradient(0deg, rgb(37 9 41), #673AB7);
+    border: none;
+    outline: none;
+    border-bottom: 3px solid rgb(128 33 144);
+    box-shadow: 0 .5em .5em -.4em rgb(0, 0, 0, .5);
+    letter-spacing: 0.08em;
+    border-radius: 20em;
+    cursor: pointer;
+
+    transition: .5s;
+}
+
+.cssbuttons-io-button:hover {
+    filter: brightness(1.2);
+    color: rgb(0, 0, 0, .5);
+}
+
+.cssbuttons-io-button:active {
+    transition: 0s;
+    transform: rotate(-10deg);
+}
+
+.remove-cipher {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .2em;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 16px;
+    padding: .5em 1.5em;
+    color: white;
+    background: linear-gradient(0deg, #6A1B9A, #E91E63);
+    border: none;
+    outline: none;
+    border-bottom: 3px solid rgb(51 5 135);
+    box-shadow: 0 .5em .5em -.4em rgb(0, 0, 0, .5);
+    letter-spacing: 0.08em;
+    border-radius: 20em;
+    cursor: pointer;
+    width: fit-content;
+    transition: .5s;
+}
+
+.remove-cipher:hover {
+    filter: brightness(1.2);
+    color: rgb(0, 0, 0, .5);
+}
+
+.cipher-row {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 1em;
+    flex-wrap: wrap;
+    gap: 1%;
+}
+
+.remove-cipher:active {
+    transition: 0s;
+    transform: rotate(-10deg);
+}
+
 .toalbar {
-
-    box-shadow: 2px 11px 0px 7px gray;
-
+    box-shadow: 0px 71px 0px 1px gray;
     text-align: center;
-
     background: linear-gradient(156deg, black, #181818);
-
     padding: 1%;
-
     font-family: 'Bebas Neue';
-
     font-weight: 400;
-
     font-style: normal;
 }
 
@@ -159,6 +225,7 @@ input {
     transition: all 0.5s;
     box-shadow: inset 1px 1px 9px 0px #000000;
     font-size: larger;
+    width: -webkit-fill-available;
 }
 
 
@@ -232,7 +299,8 @@ input:focus {
     color: #fff;
     background: linear-gradient(to right, #9f9f9f 0, #fff 10%, #868686 20%);
     background-position: 0;
-    background-clip: text; /*added to remove warning*/
+    background-clip: text;
+    /*added to remove warning*/
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shine 3s infinite linear;
@@ -352,7 +420,7 @@ section {
     position: absolute;
     outline: none;
     margin: 0.5%;
-    left: 83%;
+    left: 86%;
 }
 
 .tooltip {
@@ -433,13 +501,15 @@ section {
 .copy:hover svg {
     color: var(--button-hover-text-color);
 }
+
 .social-link {
     color: #007bff;
     text-decoration: none;
-  }
-  .social-link:hover {
+}
+
+.social-link:hover {
     color: #0056b3;
-  }
+}
 
 footer {
     background: linear-gradient(228deg, #121212, #2a0f3f);
@@ -449,12 +519,362 @@ footer {
 
 .flex-row {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    gap: 20px;
+    gap: -12px;
 }
+
 img.profile {
     width: 70px;
     border-radius: 53px;
     height: 70px;
+}
+
+.card-social {
+    display: flex;
+    height: 48px;
+    width: 240px;
+}
+
+.card-social svg {
+    position: absolute;
+    display: flex;
+    width: 42%;
+    height: 100%;
+    font-size: 24px;
+    font-weight: 700;
+    opacity: 1;
+    transition: opacity 0.25s;
+    z-index: 2;
+    padding: 0.25rem;
+    cursor: pointer;
+}
+
+.card-social .social-link1,
+.card-social .social-link2,
+.card-social .social-link3,
+.card-social .social-link4,
+.card-social .social-link5 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    color: whitesmoke;
+    font-size: 24px;
+    text-decoration: none;
+    transition: 0.25s;
+    border-radius: 50px;
+}
+
+.card-social svg {
+    transform: scale(1);
+}
+
+.card-social .social-link1:hover {
+    background-color: #12a50b;
+    animation: bounce_613 0.4s linear;
+}
+
+
+.card-social .social-link2:hover {
+    background-color: #242c34;
+    animation: bounce_613 0.4s linear;
+}
+
+.card-social .social-link3:hover {
+    background-color: #5865f2;
+    animation: bounce_613 0.4s linear;
+}
+
+.card-social .social-link4:hover {
+    background-color: #0a66c2;
+    animation: bounce_613 0.4s linear;
+}
+
+
+@keyframes bounce_613 {
+    40% {
+        transform: scale(1.4);
+    }
+
+    60% {
+        transform: scale(0.8);
+    }
+
+    80% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+h2 {
+    padding: 0;
+    margin: 0;
+    font-size: x-large;
+}
+
+@media screen and (max-width:1024px) {
+    body {
+        font-size: medium;
+    }
+
+    label {
+        font-size: medium;
+    }
+
+    span {
+        font-size: medium;
+    }
+
+    .radio-inputs .radio .name {
+        font-size: 20px;
+        padding: 7px 0px;
+    }
+
+    select {
+        font-size: medium;
+    }
+
+    .title {
+        font-size: xx-large;
+    }
+
+    .btn-shine {
+        font-size: larger;
+    }
+
+    h2 {
+        font-size: large;
+    }
+
+    h3 {
+        font-size: medium;
+    }
+
+    .card-social {
+        width: 200px;
+    }
+
+    .copy {
+        left: 84%;
+    }
+}
+
+@media screen and (max-width:855px) {
+    .radio-inputs .radio .name {
+        font-size: 15px;
+        padding: 7px 0px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    body {
+        font-size: small;
+    }
+
+    label {
+        font-size: small;
+    }
+
+    span {
+        font-size: small;
+    }
+
+    .radio-inputs .radio .name {
+        font-size: 15px;
+        padding: 7px 0px;
+    }
+
+    select {
+        font-size: small;
+    }
+
+    .title {
+        font-size: x-large;
+    }
+
+    .btn-shine {
+        font-size: larger;
+    }
+
+    .btn {
+        height: 4em;
+    }
+
+    h2 {
+        font-size: medium;
+    }
+
+    h3 {
+        font-size: small;
+    }
+
+    .card-social {
+        width: 170px;
+    }
+
+    .copy {
+        left: 82%;
+    }
+}
+
+@media screen and (max-width: 721px) {
+    body {
+        font-size: small;
+        width: -webkit-fill-available;
+    }
+
+    .card_back {
+        margin: 0%;
+        border-radius: 0;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    span {
+        font-size: small;
+    }
+
+    .radio-inputs .radio .name {
+        font-size: 12px;
+        padding: 7px 0px;
+    }
+
+    select {
+        font-size: 12px;
+    }
+
+    .title {
+        font-size: 22px;
+        letter-spacing: 4.5px;
+    }
+
+    .btn-shine {
+        font-size: larger;
+    }
+
+    .btn {
+        height: 3.5em;
+    }
+
+    h2 {
+        font-size: small;
+    }
+
+    h3 {
+        font-size: 10px;
+    }
+
+    .card-social {
+        width: 170px;
+    }
+
+    .copy {
+        left: 82%;
+    }
+
+    .toalbar {
+        box-shadow: -1px 2px 0px 7px gray;
+    }
+
+    .row-content {
+        flex-direction: column;
+        gap: 0px;
+        align-items: flex-start;
+    }
+
+    .cssbuttons-io-button {
+        width: -webkit-fill-available
+    }
+
+    .remove-cipher {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+
+
+    .copy {
+        left: 82%;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    span {
+        font-size: small;
+    }
+
+    .radio-inputs .radio .name {
+        font-size: 12px;
+        padding: 7px 0px;
+    }
+
+    select {
+        font-size: 12px;
+    }
+
+    .title {
+        font-size: 18px;
+        letter-spacing: 3.5px;
+    }
+
+    .card_back {
+        margin: 0%;
+        border-radius: 0;
+        padding: 0;
+    }
+
+    .card {
+        border-radius: 0;
+
+    }
+
+    .radio-inputs {
+        display: grid;
+        border-radius: 20px;
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .flex-row {
+        flex-direction: column;
+    }
+
+    footer {
+        padding: 2%;
+    }
+}
+
+@media screen and (max-width: 390px) {
+    body {
+        width: max-content;
+    }
+}
+
+@media screen and (max-width: 330px) {
+    body {
+        width: min-content;
+    }
+}
+
+@media screen and (max-width:330px) {
+    .radio-inputs {
+        display: grid;
+        border-radius: 20px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .title {
+        font-size: 18px;
+        letter-spacing: 1.5px;
+        padding: 15px;
+    }
 }
