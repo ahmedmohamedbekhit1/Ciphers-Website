@@ -56,10 +56,11 @@ Website Interface :
 
 
 </br></br>
-Playfair as an example :
+Playfair Usage as an example :
 </br></br>
 
-![Screenshot (214)](https://github.com/Arsany-Osama/Ciphers-Website/assets/160052013/372bb7ca-48fd-47e6-bd95-728a100d3cc4)
+
+![Screenshot (218)](https://github.com/Arsany-Osama/Ciphers-Website/assets/160052013/05986bbf-93c7-497b-ab9a-f2f65f09d7ad)
 
 
 
