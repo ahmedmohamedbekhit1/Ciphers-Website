@@ -17,15 +17,14 @@
     Caesar, Railfence, Playfair, Vigenere, ADFGVX, DES & 3DES 
     <br/>
     &nbsp; &nbsp; &nbsp; &nbsp;>>With Product Cipher<< </br>
-    &nbsp; &nbsp; &nbsp; Try It Now! 
-      
-      [Cipher Encryption and Decryption]-(https://ciphers-encryption-decryption.000webhostapp.com)
-      
+  
     </br>
   </p>
 </div>
 
+## Website
 
+You can access the website here: [Cipher Encryption and Decryption](https://ciphers-encryption-decryption.000webhostapp.com/)
 
 <!-- TABLE OF CONTENTS -->
 <details>
