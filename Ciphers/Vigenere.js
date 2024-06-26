@@ -64,11 +64,12 @@ function vigenereDecrypt(ciphertext, key, mode) {
     let ciphertextIndices = [];
     let keyIndices = [];
     let plaintextIndices = [];
-    let details = `*** Decrypting by Vigenere Cipher ***\n`;
+    let details = `**Warning: if key length smaller than plaintext the decryption will not occur to the whole cipher**\n\n`;
+    details += `*** Decrypting by Vigenere Cipher ***\n`;
     details += `Ciphertext: ${ciphertext}\n`;
     details += `Key: ${key}\n`;
     details += `Mode: ${mode}\n`;
-
+    let repp=0;
     for (let i = 0; i < ciphertext.length; i++) {
         let cipherchar = ciphertext[i];
         let cipherIndex = cipherchar.charCodeAt(0) - 65;
@@ -77,7 +78,14 @@ function vigenereDecrypt(ciphertext, key, mode) {
         if (mode === "repeatKey") {
             keyIndex = key[i % key.length].charCodeAt(0) - 65;
         } else if (mode === "repeatPlaintext") {
-            keyIndex = ciphertext[i % key.length].charCodeAt(0) - 65;
+            let keyChar = key[i % key.length].charCodeAt(0) - 65;
+            if (i < key.length) {
+                keyIndex = keyChar;
+            } else {
+                
+                keyIndex = ciphertext[repp].charCodeAt(0) - 65;
+                repp=repp+1;
+            }
         } else { // no repeat (default)
             if (i < key.length) {
                 keyIndex = key[i].charCodeAt(0) - 65;

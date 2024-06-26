@@ -1117,6 +1117,8 @@
                         let addButton = document.getElementById('add-cipher');
                         let actionSelect = document.getElementById('action6');
                         let processButton = document.getElementById('process-btn6');
+                        let p = document.getElementById("plaintext6")
+                        let c = document.getElementById("ciphertext6")
                         document.getElementById("ciphertext6").disabled = true;
                         let cipherCount = 0;
 
@@ -1125,30 +1127,41 @@
                                 cipherCount++;
                                 addCipherRow(cipherSelect.value, cipherCount);
                                 cipherSelect.value = ''; // Reset the select box
+                            } else {
+                                alert("Choose specific cipher");
                             }
-                        });
-
-                        actionSelect.addEventListener('change', function () {
-                            let action = document.getElementById("action6").value;
-                            if (action === "encrypt6") {
-                                document.getElementById("ciphertext6").value = '';
-                                document.getElementById("ciphertext6").disabled = true;
-                                document.getElementById("plaintext6").disabled = false;
-                            } else if (action === "decrypt6") {
-                                document.getElementById("plaintext6").value = '';
-                                document.getElementById("plaintext6").disabled = true;
-                                document.getElementById("ciphertext6").disabled = false;
-                            }
-                            reverseCiphers();
                         });
 
                         processButton.addEventListener('click', function () {
                             let action = actionSelect.value;
                             if (action === 'encrypt6') {
-                                processCiphers('encrypt');
+                                if (!p.value) {
+                                    alert("Enter valid plaintext");
+                                } else {
+                                    processCiphers('encrypt');
+                                }
                             } else if (action === 'decrypt6') {
-                                processCiphers('decrypt');
+                                if (!c.value) {
+                                    alert("Enter valid ciphertext");
+                                    isValid = false;
+                                } else {
+                                    processCiphers('decrypt');
+                                }
                             }
+                        });
+
+                        actionSelect.addEventListener('change', function () {
+                            let action = document.getElementById("action6").value;
+                        if (action === "encrypt6") {
+                            document.getElementById("ciphertext6").value = '';
+                            document.getElementById("ciphertext6").disabled = true;
+                            document.getElementById("plaintext6").disabled = false;
+                        } else if (action === "decrypt6") {
+                            document.getElementById("plaintext6").value = '';
+                            document.getElementById("plaintext6").disabled = true;
+                            document.getElementById("ciphertext6").disabled = false;
+                        }
+                            reverseCiphers();
                         });
 
                         function addCipherRow(cipher, number) {
@@ -1156,8 +1169,7 @@
                             row.className = 'cipher-row';
                             let keyInput = getKeyInput(cipher);
                             row.innerHTML = `
-                            <label>${number}) ${cipher}</label>
-                           
+                            <span>${number}) ${cipher}</span>
                             <button class="remove-cipher">Remove</button>
                             <br> <br><br>
                             ${keyInput}
@@ -1213,6 +1225,9 @@
 
                         function processCiphers(action) {
                             let rows = Array.from(cipherContainer.getElementsByClassName('cipher-row'));
+                            if (rows.length === 0) {
+                                alert("Select Cipher first!");
+                            }
                             let inputText = document.getElementById(action === 'encrypt' ? 'plaintext6' : 'ciphertext6').value;
                             let resultText = inputText;
                             document.getElementById("details6").value = '';
@@ -1473,7 +1488,7 @@
                                             </path>
                                         </svg> </a>
 
-                                    <a class="social-link4" href="">
+                                    <a class="social-link4" href="https://www.linkedin.com/in/arsany-osama-446942264/">
                                         <svg fill="#fff" viewBox="0 0 448 512" height="1em"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
