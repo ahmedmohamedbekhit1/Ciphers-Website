@@ -26,7 +26,7 @@ function PlayFairEncrypt(plaintext, key, rowShift, columnShift, elsewhereOrder) 
 
     let ciphertext = "";
     let i = 0;
-    plaintext = plaintext.toUpperCase().replace(/J/g, "I");
+    plaintext = plaintext.trim().replace(/\s+/g, '').toUpperCase().replace(/J/g, "I");
 
     while (i < plaintext.length) {
         let pair;
@@ -97,7 +97,7 @@ function PlayFairDecrypt(ciphertext, key, rowShift, columnShift, elsewhereOrder)
 
     let plaintext = "";
     let i = 0;
-    ciphertext = ciphertext.toUpperCase();
+    ciphertext = ciphertext.trim().replace(/\s+/g, '').toUpperCase();
 
     while (i < ciphertext.length) {
         let pair;
