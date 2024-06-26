@@ -66,6 +66,7 @@ Playfair Usage as an example :
 
 
 ### Features:
+- Print all details of encryption or decryption step by step
 - The possibility of merging ciphers using a key for each cipher with a single plaintext or ciphertext (Product Cipher)
 - The ability to specify Encryption & Decryption Shift Directions in the Playfair cipher
 - The ability to specify the key in vigenere if it is a constant that is not repeated or repeated or repeated from the plaintext
